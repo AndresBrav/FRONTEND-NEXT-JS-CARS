@@ -92,7 +92,7 @@ const ListDemo = () => {
     const dataviewListItem = (data: Demo.Product) => {
         return (
             <div className="col-12">
-                <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
+                {/* <div className="flex flex-column md:flex-row align-items-center p-3 w-full">
                     <img src={`/demo/images/product/${data.image}`} alt={data.name} className="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
                     <div className="flex-1 flex flex-column align-items-center text-center md:text-left">
                         <div className="font-bold text-2xl">{data.name}</div>
@@ -108,7 +108,7 @@ const ListDemo = () => {
                         <Button icon="pi pi-shopping-cart" label="Add to Cart" disabled={data.inventoryStatus === 'OUTOFSTOCK'} size="small" className="mb-2"></Button>
                         <span className={`product-badge status-${data.inventoryStatus?.toLowerCase()}`}>{data.inventoryStatus}</span>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     };
