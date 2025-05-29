@@ -32,15 +32,8 @@ const AppMenu = () => {
                 { label: 'Menu', icon: 'pi pi-fw pi-bars', to: '/uikit/menu', preventExact: true },
                 { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/uikit/message' },
                 { label: 'File', icon: 'pi pi-fw pi-file', to: '/uikit/file' },
-                { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
-                { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
-            ]
-        },
-        {
-            label: 'Prime Blocks',
-            items: [
-                { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', to: '/blocks', badge: 'NEW' },
-                { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: 'https://blocks.primereact.org', target: '_blank' }
+                // { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
+                // { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
             ]
         },
         {
@@ -48,11 +41,7 @@ const AppMenu = () => {
             icon: 'pi pi-fw pi-briefcase',
             to: '/pages',
             items: [
-                {
-                    label: 'Landing',
-                    icon: 'pi pi-fw pi-globe',
-                    to: '/landing'
-                },
+                
                 {
                     label: 'Auth',
                     icon: 'pi pi-fw pi-user',
@@ -80,11 +69,6 @@ const AppMenu = () => {
                     to: '/pages/crud'
                 },
                 {
-                    label: 'Timeline',
-                    icon: 'pi pi-fw pi-calendar',
-                    to: '/pages/timeline'
-                },
-                {
                     label: 'Not Found',
                     icon: 'pi pi-fw pi-exclamation-circle',
                     to: '/pages/notfound'
@@ -107,7 +91,7 @@ const AppMenu = () => {
                 {
                     label: 'View Source',
                     icon: 'pi pi-fw pi-search',
-                    url: 'https://github.com/primefaces/sakai-react',
+                    url: 'https://github.com/AndresBrav/FRONTEND-NEXT-JS-CARS.git',
                     target: '_blank'
                 }
             ]
