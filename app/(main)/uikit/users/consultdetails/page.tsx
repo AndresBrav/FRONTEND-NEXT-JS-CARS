@@ -1,9 +1,12 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Rating } from 'primereact/rating';
 import { Button } from 'primereact/button';
 import axios from 'axios';
-
+import {  } from 'react';
+import { TokenContext } from '@/app/(main)/context/TokenContext';
+import useAuthRedirect from '@/app/(main)/hooks/useAuthRedirect';
+// import { TokenContext } from '@/context/TokenContext';
 const apiUsers = process.env.NEXT_PUBLIC_USERS_API_URL;
 
 interface User {
@@ -15,18 +18,10 @@ interface User {
 }
 
 const ConsultDetails = () => {
+    useAuthRedirect(); /* redirect to login  */
     const [data, setData] = useState<User[] | null>(null);
 
-    const mockData: User[] = [
-        { id: 1, login: 'admin', clave: '1234', sts: 'activo', tipo: 'admin' },
-        { id: 2, login: 'johndoe', clave: 'abcd', sts: 'inactivo', tipo: 'usuario' },
-        { id: 3, login: 'janedoe', clave: 'pass', sts: 'activo', tipo: 'moderador' },
-        { id: 4, login: 'maria', clave: 'qwerty', sts: 'activo', tipo: 'admin' },
-        { id: 5, login: 'carlos', clave: 'zxcv', sts: 'inactivo', tipo: 'usuario' },
-        { id: 6, login: 'laura', clave: '9876', sts: 'activo', tipo: 'usuario' },
-        { id: 6, login: 'laura', clave: '9876', sts: 'activo', tipo: 'usuario' }
-    ];
-
+    const { keyAccess, setKeyAccess } = useContext(TokenContext); /* we bring the context */
     
 
     const DataviewGridItem = ({ user }: { user: User }) => {
@@ -35,18 +30,18 @@ const ConsultDetails = () => {
                 <div className="card m-3 border-1 surface-border">
                     <div className="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
                         <div className="flex align-items-center">
-                            <i className="pi pi-tag mr-2" />
-                            <span className="font-semibold">{user.login}</span>
+                            {/* <i className="pi pi-tag mr-2" /> */}
+                            <span className="font-semibold"> login: {user.login}</span>
                         </div>
                     </div>
                     <div className="flex flex-column align-items-center text-center mb-3">
-                        <div className="text-2xl font-bold">{user.tipo}</div>
-                        <div className="mb-3">{user.sts}</div>
-                        <Rating value={4} readOnly cancel={false} />
+                        <div className="text-2xl font-bold">tipo: {user.tipo}</div>
+                        <div className="mb-3">sts: {user.sts}</div>
+                        {/* <Rating value={4} readOnly cancel={false} /> */}
                     </div>
                     <div className="flex align-items-center justify-content-between">
                         <span className="text-2xl font-semibold">ID: {user.id}</span>
-                        <Button icon="pi pi-user" />
+                        {/* <Button icon="pi pi-user" /> */}
                     </div>
                 </div>
             </div>
@@ -57,7 +52,7 @@ const ConsultDetails = () => {
         try {
             const response = await axios.get(`${apiUsers}`, {
                 headers: {
-                    'x-api-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1IjoiVVNFUjEiLCJ0IjoiYWRtaW4iLCJpYXQiOjE3NDg2MTA5MjAsImV4cCI6MTc0ODYyMTcyMH0.10BdNrGDdSintEBtDYWht2S_kz65GaUlyxS8mcCKy2w'
+                    'x-api-token': keyAccess
                     // 'Content-Type': 'application/json' just use in post or update sent the information in JSON
                 }
             });
@@ -71,16 +66,7 @@ const ConsultDetails = () => {
 
     return (
         <>
-            {/* <div className="grid">
-                <div className="col-12 md:col-6">
-                    <div className="card">
-                        <h5>Default</h5>
-                        <div className="flex flex-wrap gap-2">
-                            <Button label="Consult"></Button>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+            {/* <p>Token actual: {keyAccess}</p> */}
             <div className="grid justify-content-center">
                 <div className="col-12 md:col-6">
                     <div className="card">

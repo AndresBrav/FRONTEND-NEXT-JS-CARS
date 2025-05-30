@@ -16,7 +16,7 @@ const AppMenu = () => {
             items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' }]
         },
         {
-            label: 'Components',
+            label: 'User Options',
             items: [
                 { label: 'Consult Details', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/consultdetails' },
                 { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
