@@ -19,6 +19,7 @@ const AppMenu = () => {
             label: 'User Options',
             items: [
                 { label: 'Consult Details', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/consultdetails' },
+                { label: 'Consult One Detail', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/consultonedetail' },
                 { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
                 { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
                 { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
