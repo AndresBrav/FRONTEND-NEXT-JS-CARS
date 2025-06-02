@@ -206,13 +206,13 @@ const OverlayDemo = () => {
                     </div>
                 </div>
                 <div className="col-12 lg:col-6">
-                    <Toast ref={toast} />
+                    {/* <Toast ref={toast} /> */}
 
                     <div className="card">
                         <h5>ConfirmPopup</h5>
-                        <ConfirmPopup />
+                        {/* <ConfirmPopup /> */}
                         <Button onClick={confirm} icon="pi pi-check" label="Confirm"></Button>
-                    </div>
+                    </div>  
                 </div>
             </div>
         </>
