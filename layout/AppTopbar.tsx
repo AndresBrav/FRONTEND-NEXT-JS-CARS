@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-
+'use client'
 import Link from 'next/link';
 import { classNames } from 'primereact/utils';
 import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'react';
