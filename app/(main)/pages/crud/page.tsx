@@ -54,8 +54,8 @@ const Crud = () => {
     };
 
     const openNew = () => {
-        setProduct(emptyProduct);
-        setSubmitted(false);
+        // setProduct(emptyProduct);
+        // setSubmitted(false);
         setProductDialog(true);
     };
 

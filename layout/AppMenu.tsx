@@ -23,6 +23,7 @@ const AppMenu = () => {
                 { label: 'Add User', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/adduser' },
                 { label: 'Update User', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/updateuser' },
                 { label: 'Delete User', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/deleteuser' },
+                { label: 'Details Cars ', icon: 'pi pi-fw pi-id-card', to: '/uikit/cars/getcars' },
                 { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
                 { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
                 { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },

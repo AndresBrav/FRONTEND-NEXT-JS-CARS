@@ -1,0 +1,254 @@
+'use client';
+
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
+import { Toolbar } from 'primereact/toolbar';
+import { InputText } from 'primereact/inputtext';
+import { Dialog } from 'primereact/dialog';
+import axios from 'axios';
+import { TokenContext } from '@/app/(main)/context/TokenContext';
+import useAuthRedirect from '@/app/(main)/hooks/useAuthRedirect';
+import { InputNumber } from 'primereact/inputnumber';
+import { InputNumberValueChangeEvent } from 'primereact/inputnumber';
+import { Toast } from 'primereact/toast';
+import { setSourceMapRange } from 'typescript';
+
+const apiCars = process.env.NEXT_PUBLIC_CARS;
+
+type Product = {
+    id?: string;
+    nombre: string;
+    descripcion: string;
+    precio: number;
+    stock: number;
+};
+
+const CarsCrud = () => {
+    useAuthRedirect(); // Redirige si no hay sesión
+    const { keyAccess } = useContext(TokenContext); // Trae el token
+
+    const [products, setProducts] = useState<Product[]>([]);
+    const [productDialog, setProductDialog] = useState(false);
+    const [productDialogUpdate, setProductDialogUpdate] = useState(false);
+    const [product, setProduct] = useState<Product>({ id: '', nombre: '', descripcion: '', precio: 0, stock: 0 });
+    const [submitted, setSubmitted] = useState(false);
+
+    const [id, setId] = useState<string | undefined>('second');
+    const [nombre, setNombre] = useState<string | undefined>('');
+    const [descripcion, setDescripcion] = useState<string | undefined>('');
+    const [precio, setPrecio] = useState<number | undefined>(0);
+    const [stock, setStock] = useState<number | undefined>(0);
+    const toast = useRef<Toast>(null);
+    const [update, setUpdate] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!keyAccess || keyAccess.trim() === '') return;
+
+        const fetchData = async () => {
+            console.log('🔐 Token usado:', keyAccess);
+            try {
+                const response = await axios.get(`${apiCars}`, {
+                    headers: {
+                        'x-api-token': keyAccess
+                    }
+                });
+                console.log('✅ Datos recibidos:', response);
+                setProducts(response.data);
+            } catch (error) {
+                console.error('❌ Error al traer datos', error);
+            }
+        };
+
+        fetchData();
+    }, [keyAccess]);
+
+    const openNew = () => {
+        setProduct({ id: '', nombre: '', descripcion: '', precio: 0, stock: 0 });
+        setSubmitted(false);
+        setProductDialog(true);
+    };
+
+    const hideDialog = () => {
+        setSubmitted(false);
+        setProductDialog(false);
+    };
+
+    const saveProduct = async () => {
+        try {
+            console.log(update);
+            if (update) {
+                console.log('we are going to update');
+
+                const response = await axios.put(
+                    `${apiCars}updateCar/${id}`,
+                    { nombre, descripcion, precio, stock },
+                    {
+                        headers: {
+                            'x-api-token': keyAccess,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                console.log(response);
+                setProductDialog(false); /* this close the window */
+
+                toast.current?.show({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Car Updated',
+                    life: 3000
+                });
+
+                setUpdate(false);
+            } else {
+                setNombre('');
+                setDescripcion('');
+                setPrecio(0);
+                setStock(0);
+
+                console.log('product was saved');
+
+                const response = await axios.post(
+                    `${apiCars}addCar/`,
+                    { nombre, descripcion, precio, stock },
+                    {
+                        headers: {
+                            'x-api-token': keyAccess,
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                );
+                console.log(response);
+
+                setSubmitted(true);
+                setProductDialog(false); /* this close the window */
+
+                toast.current?.show({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Car Created',
+                    life: 3000
+                });
+            }
+        } catch (error) {}
+    };
+
+    const editProduct = (rowData: Product) => {
+        console.log('we are going to bring the product');
+        const { id, nombre, descripcion, precio, stock } = rowData;
+        console.log(id, nombre, descripcion, precio, stock);
+        setId(id);
+        setNombre(nombre);
+        setDescripcion(descripcion);
+        setPrecio(precio);
+        setStock(stock);
+
+        setProductDialog(true);
+        setUpdate(true); /* we update de button  */
+    };
+
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, name: keyof Product) => {
+        let val: string = e.target.value;
+
+        if (name === 'nombre') {
+            setNombre(val);
+        }
+        if (name === 'descripcion') {
+            setDescripcion(val);
+        }
+    };
+
+    const onInputChangeNumber = (e: InputNumberValueChangeEvent, name: keyof Product) => {
+        let val = e.value ?? 0;
+
+        if (name === 'precio') {
+            setPrecio(val);
+        }
+        if (name === 'stock') {
+            setStock(val);
+        }
+    };
+
+    const leftToolbarTemplate = () => <Button label="Nuevo" icon="pi pi-plus" className="mr-2" onClick={openNew} />;
+
+    const actionBodyTemplate = (rowData: Product) => (
+        <div className="flex gap-2">
+            <Button
+                icon="pi pi-pencil"
+                className="p-button-rounded p-button-success p-button-sm"
+                onClick={() => editProduct(rowData)}
+            />
+            <Button icon="pi pi-trash" className="p-button-rounded p-button-danger p-button-sm" />
+        </div>
+    );
+
+    return (
+        <div className="card">
+            <Toast ref={toast} /> {/* <- references at toast */}
+            <Toolbar className="mb-4" left={leftToolbarTemplate} />
+            <DataTable value={products} paginator rows={5} responsiveLayout="scroll">
+                <Column field="id" header="ID" />
+                <Column field="nombre" header="Nombre" />
+                <Column field="descripcion" header="Descripción" />
+                <Column field="stock" header="Stock" />
+                <Column header="Acciones" body={actionBodyTemplate} />
+            </DataTable>
+            <Dialog
+                visible={productDialog}
+                style={{ width: '450px' }}
+                header="Detalles del producto"
+                modal
+                className="p-fluid"
+                onHide={hideDialog}
+                footer={
+                    <>
+                        <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+                        <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
+                    </>
+                }
+            >
+                <div className="field">
+                    <label htmlFor="nombre">Nombre</label>
+                    <InputText
+                        id="nombre"
+                        value={nombre}
+                        onChange={(e) => onInputChange(e, 'nombre')}
+                        required
+                        autoFocus
+                        // className={submitted && !product.nombre ? 'p-invalid' : ''}
+                    />
+                    {/* {submitted && !product.nombre && <small className="p-error">Nombre es requerido.</small>} */}
+                </div>
+
+                <div className="field">
+                    <label htmlFor="descripcion">Descripción</label>
+                    <InputText id="descripcion" value={descripcion} onChange={(e) => onInputChange(e, 'descripcion')} />
+                </div>
+
+                <div className="field">
+                    <label htmlFor="precio">Precio</label>
+                    <InputNumber
+                        id="precio"
+                        value={precio}
+                        onValueChange={(e) => onInputChangeNumber(e, 'precio')}
+                        useGrouping={true} // opcional: evita comas en números grandes
+                    />
+                </div>
+
+                <div className="field">
+                    <label htmlFor="stock">Stock</label>
+                    <InputNumber
+                        id="stock"
+                        value={stock}
+                        onValueChange={(e) => onInputChangeNumber(e, 'stock')}
+                        useGrouping={false} // opcional: evita comas en números grandes
+                    />
+                </div>
+            </Dialog>
+        </div>
+    );
+};
+
+export default CarsCrud;
