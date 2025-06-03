@@ -303,8 +303,8 @@ const Crud = () => {
     );
     const deleteProductDialogFooter = (
         <>
-            <Button label="No" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
-            <Button label="Yes" icon="pi pi-check" text onClick={deleteProduct} />
+            {/* <Button label="No" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
+            <Button label="Yes" icon="pi pi-check" text onClick={deleteProduct} /> */}
         </>
     );
     const deleteProductsDialogFooter = (

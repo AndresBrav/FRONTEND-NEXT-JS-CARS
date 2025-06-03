@@ -42,6 +42,7 @@ const CarsCrud = () => {
     const [stock, setStock] = useState<number | undefined>(0);
     const toast = useRef<Toast>(null);
     const [update, setUpdate] = useState<boolean>(false);
+    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
 
     useEffect(() => {
         if (!keyAccess || keyAccess.trim() === '') return;
@@ -149,6 +150,13 @@ const CarsCrud = () => {
         setUpdate(true); /* we update de button  */
     };
 
+    const deleteProduct = (rowData: Product) => {
+        console.log('we are going to delete the car');
+        console.log(rowData);
+        setId(rowData.id);
+        setDeleteProductDialog(true);
+    };
+
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, name: keyof Product) => {
         let val: string = e.target.value;
 
@@ -180,9 +188,44 @@ const CarsCrud = () => {
                 className="p-button-rounded p-button-success p-button-sm"
                 onClick={() => editProduct(rowData)}
             />
-            <Button icon="pi pi-trash" className="p-button-rounded p-button-danger p-button-sm" />
+            <Button
+                icon="pi pi-trash"
+                className="p-button-rounded p-button-danger p-button-sm"
+                onClick={() => deleteProduct(rowData)}
+            />
         </div>
     );
+
+    const handleDeleteCar = async () => {
+        try {
+            const response = await axios.delete(`${apiCars}delCar/${id}`, {
+                headers: {
+                    'x-api-token': keyAccess
+                }
+            });
+            console.log(response);
+            setDeleteProductDialog(false)
+            toast.current?.show({
+                    severity: 'error',
+                    summary: 'Successful',
+                    detail: 'Car Deleted',
+                    life: 3000
+                });
+        } catch (error) {
+            console.log('Error deleting car');
+        }
+    };
+
+    const deleteProductDialogFooter = (
+        <>
+            <Button label="No" icon="pi pi-times" text onClick={() => setDeleteProductDialog(false)} />
+            <Button label="Yes" icon="pi pi-check" text onClick={handleDeleteCar} />
+        </>
+    );
+
+    const hideDeleteProductDialog = () => {
+        setDeleteProductDialog(false);
+    };
 
     return (
         <div className="card">
@@ -245,6 +288,19 @@ const CarsCrud = () => {
                         onValueChange={(e) => onInputChangeNumber(e, 'stock')}
                         useGrouping={false} // opcional: evita comas en números grandes
                     />
+                </div>
+            </Dialog>
+            <Dialog
+                visible={deleteProductDialog}
+                style={{ width: '450px' }}
+                header="Confirm"
+                modal
+                footer={deleteProductDialogFooter}
+                onHide={hideDeleteProductDialog}
+            >
+                <div className="flex align-items-center justify-content-center">
+                    <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
+                    <span>Are you sure you want to delete?</span>
                 </div>
             </Dialog>
         </div>
