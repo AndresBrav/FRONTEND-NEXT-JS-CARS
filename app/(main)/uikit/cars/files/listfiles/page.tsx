@@ -372,15 +372,15 @@ const ListFiles = () => {
             <Dialog
                 visible={productDialog}
                 style={{ width: '450px' }}
-                header="Detalles del producto"
+                header="File Details"
                 modal
                 className="p-fluid"
                 onHide={hideDialog}
                 footer={
                     <>
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+                        <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
                         <Button
-                            label="Guardar"
+                            label="Save"
                             icon="pi pi-check"
                             className="p-button-text"
                             onClick={handleSaveListCars}
@@ -413,7 +413,7 @@ const ListFiles = () => {
                 footer={
                     <>
                         <Button
-                            label="Cancelar"
+                            label="Cancel"
                             icon="pi pi-times"
                             className="p-button-text"
                             onClick={() => {
@@ -421,7 +421,7 @@ const ListFiles = () => {
                             }}
                         />
                         <Button
-                            label="Guardar"
+                            label="Save"
                             icon="pi pi-check"
                             className="p-button-text"
                             onClick={handleSaveOneCar}
@@ -465,7 +465,7 @@ const ListFiles = () => {
                 footer={
                     <>
                         <Button
-                            label="Cancelar"
+                            label="Cancel"
                             icon="pi pi-times"
                             className="p-button-text"
                             onClick={() => {
@@ -473,7 +473,7 @@ const ListFiles = () => {
                             }}
                         />
                         <Button
-                            label="Guardar"
+                            label="Save"
                             icon="pi pi-check"
                             className="p-button-text"
                             onClick={handleUploadFTP}
@@ -550,7 +550,7 @@ const ListFiles = () => {
                 footer={
                     <>
                         <Button
-                            label="Cerrar"
+                            label="Close"
                             icon="pi pi-times"
                             className="p-button-text"
                             onClick={() => {
@@ -558,7 +558,7 @@ const ListFiles = () => {
                             }}
                         />
                         <Button
-                            label="Aceptar"
+                            label="Acept"
                             icon="pi pi-check"
                             className="p-button-text"
                             onClick={handleGenerateB64}
@@ -603,7 +603,7 @@ const ListFiles = () => {
                 footer={
                     <>
                         <Button
-                            label="Cerrar"
+                            label="Close"
                             icon="pi pi-times"
                             className="p-button-text"
                             onClick={() => {
@@ -611,7 +611,7 @@ const ListFiles = () => {
                             }}
                         />
                         <Button
-                            label="Aceptar"
+                            label="Acept"
                             icon="pi pi-check"
                             className="p-button-text"
                             onClick={handleConvertB64ToFile}

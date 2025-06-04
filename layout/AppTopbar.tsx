@@ -8,6 +8,7 @@ import { LayoutContext } from './context/layoutcontext';
 import { TokenContext } from '@/app/(main)/context/TokenContext';
 import { Sidebar } from 'primereact/sidebar';
 import { PrimeReactContext } from 'primereact/api';
+import { Toast } from 'primereact/toast';
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { layoutConfig, setLayoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
@@ -19,6 +20,8 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const topbarmenubuttonRef = useRef(null);
     const { keyAccess, setKeyAccess } = useContext(TokenContext);
 
+    const toast = useRef<Toast>(null);
+
     useImperativeHandle(ref, () => ({
         menubutton: menubuttonRef.current,
         topbarmenu: topbarmenuRef.current,
@@ -28,6 +31,12 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const handleLogOut = () => {
         setKeyAccess('');
         localStorage.removeItem('token');
+        toast.current?.show({
+            severity: 'success',
+            summary: 'Successful',
+            detail: 'You left the session',
+            life: 5000
+        });
     };
 
     const handleSettingsClick = () => {
@@ -43,6 +52,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     return (
         <>
             <div className="layout-topbar">
+                <Toast ref={toast} /> {/* <- references at toast */}
                 <Link href="/" className="layout-topbar-logo">
                     <img
                         src={`/layout/images/car-${layoutConfig.colorScheme !== 'light' ? 'white' : 'dark'}.svg`}
@@ -89,7 +99,6 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                     </button>
                 </div>
             </div>
-
             <Sidebar
                 visible={configVisible}
                 onHide={() => setConfigVisible(false)}
@@ -113,10 +122,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                         ['viva-dark', 'dark']
                     ].map(([theme, scheme]) => (
                         <div className="col-3" key={theme}>
-                            <button
-                                className="p-link w-2rem h-2rem"
-                                onClick={() => _changeTheme(theme, scheme)}
-                            >
+                            <button className="p-link w-2rem h-2rem" onClick={() => _changeTheme(theme, scheme)}>
                                 <img
                                     src={`/layout/images/themes/${theme}.${theme.includes('viva') ? 'svg' : 'png'}`}
                                     className="w-2rem h-2rem"

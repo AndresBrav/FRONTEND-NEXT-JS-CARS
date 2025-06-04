@@ -179,7 +179,7 @@ const CarsCrud = () => {
         }
     };
 
-    const leftToolbarTemplate = () => <Button label="Nuevo" icon="pi pi-plus" className="mr-2" onClick={openNew} />;
+    const leftToolbarTemplate = () => <Button label="New" icon="pi pi-plus" className="mr-2" onClick={openNew} />;
 
     const actionBodyTemplate = (rowData: Product) => (
         <div className="flex gap-2">
@@ -233,22 +233,22 @@ const CarsCrud = () => {
             <Toolbar className="mb-4" left={leftToolbarTemplate} />
             <DataTable value={products} paginator rows={5} responsiveLayout="scroll">
                 <Column field="id" header="ID" />
-                <Column field="nombre" header="Nombre" />
-                <Column field="descripcion" header="Descripción" />
+                <Column field="nombre" header="Name" />
+                <Column field="descripcion" header="Description" />
                 <Column field="stock" header="Stock" />
-                <Column header="Acciones" body={actionBodyTemplate} />
+                <Column header="Acctions" body={actionBodyTemplate} />
             </DataTable>
             <Dialog
                 visible={productDialog}
                 style={{ width: '450px' }}
-                header="Detalles del producto"
+                header="Details of Cars"
                 modal
                 className="p-fluid"
                 onHide={hideDialog}
                 footer={
                     <>
-                        <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
-                        <Button label="Guardar" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
+                        <Button label="Cancel" icon="pi pi-times" className="p-button-text" onClick={hideDialog} />
+                        <Button label="Save" icon="pi pi-check" className="p-button-text" onClick={saveProduct} />
                     </>
                 }
             >
@@ -260,9 +260,7 @@ const CarsCrud = () => {
                         onChange={(e) => onInputChange(e, 'nombre')}
                         required
                         autoFocus
-                        // className={submitted && !product.nombre ? 'p-invalid' : ''}
                     />
-                    {/* {submitted && !product.nombre && <small className="p-error">Nombre es requerido.</small>} */}
                 </div>
 
                 <div className="field">
