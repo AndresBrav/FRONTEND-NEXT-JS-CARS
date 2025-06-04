@@ -34,6 +34,16 @@ const ListFiles = () => {
 
     const handleSaveListCars = async () => {
         try {
+            if (!tipoGuardado.trim()) {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Field is required',
+                    detail: 'Please, write "pdf" or "txt"',
+                    life: 4000
+                });
+                return;
+            }
+
             console.log('we arrive here');
             const response = await axios.post(
                 `${apiCars}savePdf/list/`,
@@ -64,6 +74,26 @@ const ListFiles = () => {
             // console.log('Function: Save One Car');
             // console.log(id);
             // console.log(tipoGuardado);
+
+            if (!tipoGuardado.trim()) {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Field is required',
+                    detail: 'Please, write "pdf" or "txt"',
+                    life: 4000
+                });
+                return;
+            }
+
+            if (!id.trim()) {
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Field is required',
+                    detail: 'Please, write car ID',
+                    life: 4000
+                });
+                return;
+            }
 
             const response = await axios.post(
                 `${apiCars}saveOnePdf/list/${id}`,
@@ -269,7 +299,7 @@ const ListFiles = () => {
                 }
             >
                 <div className="field">
-                    <label htmlFor="id">Tipo de Guardado</label>
+                    <label htmlFor="id">ID car</label>
                     <InputText
                         id="id"
                         value={id}
