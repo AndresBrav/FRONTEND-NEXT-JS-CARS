@@ -12,6 +12,7 @@ import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import React, { useContext, useRef, useState } from 'react';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Extension } from 'typescript';
 
 const apiCars = process.env.NEXT_PUBLIC_CARS;
 
@@ -24,6 +25,7 @@ type File = {
     user?: string;
     password?: string;
     b64data?: string;
+    extension?: string;
 };
 
 const ListFiles = () => {
@@ -49,8 +51,10 @@ const ListFiles = () => {
 
     // return Base 64
     const [b64dialog, setB64dialog] = useState<boolean>(false);
-
     const [b64data, setb64data] = useState<string>('');
+    //Convert B64 to file
+    const [extension, setExtension] = useState('pdf');
+    const [convert6b4dialog, setConvert6b4dialog] = useState<boolean>(false);
 
     const handleSaveListCars = async () => {
         try {
@@ -197,7 +201,7 @@ const ListFiles = () => {
             );
             console.log(response);
             setb64data(response.data.base64);
-            
+
             // setB64dialog(false); /* close the modal */
             toast.current?.show({
                 severity: 'success',
@@ -210,8 +214,33 @@ const ListFiles = () => {
         } catch (error) {}
     };
 
-    const handleConvertB64ToFile = () => {
-        console.log('Función: Convert B64 to File');
+    const handleConvertB64ToFile = async () => {
+        try {
+            const response = await axios.post(
+                `${apiCars}ConvertBase64toFile`,
+                { base64Data: b64data, nombreArchivo, extension },
+                {
+                    headers: {
+                        'x-api-token': keyAccess
+                    }
+                }
+            );
+            console.log(response);
+            toast.current?.show({
+                severity: 'success',
+                summary: 'Successful',
+                detail: 'file was converted',
+                life: 4000
+            });
+            setConvert6b4dialog(false); /* we close the modal */
+        } catch (error) {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Car was not converted',
+                life: 4000
+            });
+        }
     };
 
     // Array de opciones para el SplitButton
@@ -242,7 +271,9 @@ const ListFiles = () => {
         },
         {
             label: 'Convert B64 to File',
-            command: handleConvertB64ToFile
+            command: () => {
+                setConvert6b4dialog(true);
+            }
         }
     ];
 
@@ -300,6 +331,10 @@ const ListFiles = () => {
         }
         if (name === 'password') {
             setPassword(val);
+        }
+
+        if (name === 'extension') {
+            setExtension(val);
         }
     };
 
@@ -553,6 +588,72 @@ const ListFiles = () => {
                         autoFocus
                         rows={5}
                         cols={30}
+                    />
+                </div>
+            </Dialog>
+            <Dialog
+                visible={convert6b4dialog}
+                style={{ width: '450px' }}
+                header="return Base 64"
+                modal
+                className="p-fluid"
+                onHide={() => {
+                    setConvert6b4dialog(false);
+                }}
+                footer={
+                    <>
+                        <Button
+                            label="Cerrar"
+                            icon="pi pi-times"
+                            className="p-button-text"
+                            onClick={() => {
+                                setConvert6b4dialog(false);
+                            }}
+                        />
+                        <Button
+                            label="Aceptar"
+                            icon="pi pi-check"
+                            className="p-button-text"
+                            onClick={handleConvertB64ToFile}
+                        />
+                    </>
+                }
+            >
+                <div className="field">
+                    <label htmlFor="b64data">Base 64</label>
+                    <InputTextarea
+                        id="b64data"
+                        value={b64data}
+                        // onChange={(e) => onInputChange(e, 'b64data')}
+                        onChange={(e) => setb64data(e.target.value)}
+                        placeholder="The code B64 is"
+                        required
+                        autoFocus
+                        rows={5}
+                        cols={30}
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="nombreArchivo">file name</label>
+                    <InputText
+                        id="nombreArchivo"
+                        value={nombreArchivo}
+                        onChange={(e) => onInputChange(e, 'nombreArchivo')}
+                        placeholder="Write the file name"
+                        required
+                        autoFocus
+                    />
+                </div>
+
+                <div className="field">
+                    <label htmlFor="extension">Extension</label>
+                    <InputText
+                        id="extension"
+                        value={extension}
+                        onChange={(e) => onInputChange(e, 'extension')}
+                        placeholder="Write the extension pdf or txt"
+                        required
+                        autoFocus
                     />
                 </div>
             </Dialog>
