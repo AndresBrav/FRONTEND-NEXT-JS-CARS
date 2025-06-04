@@ -17,6 +17,11 @@ const apiCars = process.env.NEXT_PUBLIC_CARS;
 type File = {
     tipoGuardado: string;
     id?: string;
+    nombreArchivo?: string;
+    TipoTransferencia?: string;
+    host?: string;
+    user?: string;
+    password?: string;
 };
 
 const ListFiles = () => {
@@ -31,6 +36,14 @@ const ListFiles = () => {
 
     const [tipoGuardado, setTipoGuardado] = useState<string>('');
     const toast = useRef<Toast>(null);
+
+    // upload server ftp
+    const [serverdialog, setServerdialog] = useState<boolean>(false);
+    const [nombreArchivo, setNombreArchivo] = useState<string>('');
+    const [TipoTransferencia, setTipoTransferencia] = useState<string>('binary');
+    const [host, setHost] = useState<string>('127.0.0.1');
+    const [user, setUser] = useState<string>('ftpuser');
+    const [password, setPassword] = useState<string>('123');
 
     const handleSaveListCars = async () => {
         try {
@@ -125,8 +138,43 @@ const ListFiles = () => {
         }
     };
 
-    const handleUploadFTP = () => {
-        console.log('Función: Upload FTP');
+    const handleUploadFTP = async () => {
+        // console.log('Función: Upload FTP');
+        try {
+            const response = await axios.post(
+                `${apiCars}uploadListServer`,
+                {
+                    nombreArchivo,
+                    TipoTransferencia,
+                    host,
+                    user,
+                    password
+                },
+                {
+                    headers: {
+                        'x-api-token': keyAccess,
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+            toast.current?.show({
+                severity: 'success',
+                summary: 'Successful',
+                detail: ' Car was uploaded FTP',
+                life: 4000
+            });
+
+            setNombreArchivo('');
+            setServerdialog(false);
+            // console.log(response)
+        } catch (error) {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Car was not uploaded',
+                life: 4000
+            });
+        }
     };
 
     const handleGenerateB64 = () => {
@@ -153,7 +201,9 @@ const ListFiles = () => {
         },
         {
             label: 'Upload FTP',
-            command: handleUploadFTP
+            command: () => {
+                setServerdialog(true);
+            }
         },
         {
             label: 'Generate B64',
@@ -204,6 +254,21 @@ const ListFiles = () => {
         }
         if (name === 'tipoGuardado') {
             setTipoGuardado(val);
+        }
+        if (name === 'nombreArchivo') {
+            setNombreArchivo(val);
+        }
+        if (name === 'TipoTransferencia') {
+            setTipoTransferencia(val);
+        }
+        if (name === 'host') {
+            setHost(val);
+        }
+        if (name === 'user') {
+            setUser(val);
+        }
+        if (name === 'password') {
+            setPassword(val);
         }
     };
 
@@ -316,6 +381,92 @@ const ListFiles = () => {
                         value={tipoGuardado}
                         onChange={(e) => onInputChange(e, 'tipoGuardado')}
                         placeholder="Write pdf or txt"
+                        required
+                        autoFocus
+                    />
+                </div>
+            </Dialog>
+            {/* upload to server ftp*/}
+            <Dialog
+                visible={serverdialog}
+                style={{ width: '450px' }}
+                header="Upload file FTP"
+                modal
+                className="p-fluid"
+                onHide={() => {
+                    setServerdialog(false);
+                }}
+                footer={
+                    <>
+                        <Button
+                            label="Cancelar"
+                            icon="pi pi-times"
+                            className="p-button-text"
+                            onClick={() => {
+                                setServerdialog(false);
+                            }}
+                        />
+                        <Button
+                            label="Guardar"
+                            icon="pi pi-check"
+                            className="p-button-text"
+                            onClick={handleUploadFTP}
+                        />
+                    </>
+                }
+            >
+                <div className="field">
+                    <label htmlFor="id">Name file</label>
+                    <InputText
+                        id="nombreArchivo"
+                        value={nombreArchivo}
+                        onChange={(e) => onInputChange(e, 'nombreArchivo')}
+                        placeholder="type the name of the file"
+                        required
+                        autoFocus
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="TipoTransferencia">Tipe of Transfer</label>
+                    <InputText
+                        id="TipoTransferencia"
+                        value={TipoTransferencia}
+                        onChange={(e) => onInputChange(e, 'TipoTransferencia')}
+                        placeholder="Write binary or text"
+                        required
+                        autoFocus
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="host">Host</label>
+                    <InputText
+                        id="host"
+                        value={host}
+                        onChange={(e) => onInputChange(e, 'host')}
+                        placeholder="Write the host"
+                        required
+                        autoFocus
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="user">User</label>
+                    <InputText
+                        id="user"
+                        value={user}
+                        onChange={(e) => onInputChange(e, 'user')}
+                        placeholder="Write the user"
+                        required
+                        autoFocus
+                    />
+                </div>
+
+                <div className="field">
+                    <label htmlFor="password">Password</label>
+                    <InputText
+                        id="password"
+                        value={password}
+                        onChange={(e) => onInputChange(e, 'password')}
+                        placeholder="Write the password"
                         required
                         autoFocus
                     />
