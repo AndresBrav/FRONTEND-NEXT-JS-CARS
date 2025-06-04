@@ -11,6 +11,7 @@ import { SplitButton } from 'primereact/splitbutton';
 import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import React, { useContext, useRef, useState } from 'react';
+import { InputTextarea } from 'primereact/inputtextarea';
 
 const apiCars = process.env.NEXT_PUBLIC_CARS;
 
@@ -22,6 +23,7 @@ type File = {
     host?: string;
     user?: string;
     password?: string;
+    b64data?: string;
 };
 
 const ListFiles = () => {
@@ -44,6 +46,11 @@ const ListFiles = () => {
     const [host, setHost] = useState<string>('127.0.0.1');
     const [user, setUser] = useState<string>('ftpuser');
     const [password, setPassword] = useState<string>('123');
+
+    // return Base 64
+    const [b64dialog, setB64dialog] = useState<boolean>(false);
+
+    const [b64data, setb64data] = useState<string>('');
 
     const handleSaveListCars = async () => {
         try {
@@ -177,8 +184,30 @@ const ListFiles = () => {
         }
     };
 
-    const handleGenerateB64 = () => {
-        console.log('Función: Generate B64');
+    const handleGenerateB64 = async () => {
+        try {
+            const response = await axios.post(
+                `${apiCars}returnBase64File`,
+                { nombreArchivo },
+                {
+                    headers: {
+                        'x-api-token': keyAccess
+                    }
+                }
+            );
+            console.log(response);
+            setb64data(response.data.base64);
+            
+            // setB64dialog(false); /* close the modal */
+            toast.current?.show({
+                severity: 'success',
+                summary: 'Successful',
+                detail: ' B64 was generated',
+                life: 8000
+            });
+
+            setNombreArchivo('');
+        } catch (error) {}
     };
 
     const handleConvertB64ToFile = () => {
@@ -207,7 +236,9 @@ const ListFiles = () => {
         },
         {
             label: 'Generate B64',
-            command: handleGenerateB64
+            command: () => {
+                setB64dialog(true);
+            }
         },
         {
             label: 'Convert B64 to File',
@@ -469,6 +500,59 @@ const ListFiles = () => {
                         placeholder="Write the password"
                         required
                         autoFocus
+                    />
+                </div>
+            </Dialog>
+            <Dialog
+                visible={b64dialog}
+                style={{ width: '450px' }}
+                header="return Base 64"
+                modal
+                className="p-fluid"
+                onHide={() => {
+                    setB64dialog(false);
+                }}
+                footer={
+                    <>
+                        <Button
+                            label="Cerrar"
+                            icon="pi pi-times"
+                            className="p-button-text"
+                            onClick={() => {
+                                setB64dialog(false);
+                            }}
+                        />
+                        <Button
+                            label="Aceptar"
+                            icon="pi pi-check"
+                            className="p-button-text"
+                            onClick={handleGenerateB64}
+                        />
+                    </>
+                }
+            >
+                <div className="field">
+                    <label htmlFor="nombreArchivo">file name</label>
+                    <InputText
+                        id="nombreArchivo"
+                        value={nombreArchivo}
+                        onChange={(e) => onInputChange(e, 'nombreArchivo')}
+                        placeholder="Write the file name"
+                        required
+                        autoFocus
+                    />
+                </div>
+                <div className="field">
+                    <label htmlFor="b64data">Base 64</label>
+                    <InputTextarea
+                        id="b64data"
+                        value={b64data}
+                        // onChange={(e) => onInputChange(e, 'b64data')}
+                        placeholder="The code B64 is"
+                        required
+                        autoFocus
+                        rows={5}
+                        cols={30}
                     />
                 </div>
             </Dialog>
