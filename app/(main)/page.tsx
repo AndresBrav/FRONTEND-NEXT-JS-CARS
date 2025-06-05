@@ -125,88 +125,117 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="grid">
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Orders</span>
-                            <div className="text-900 font-medium text-xl">152</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-shopping-cart text-blue-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">24 new </span>
-                    <span className="text-500">since last visit</span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Revenue</span>
-                            <div className="text-900 font-medium text-xl">$2.100</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-map-marker text-orange-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">%52+ </span>
-                    <span className="text-500">since last week</span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Customers</span>
-                            <div className="text-900 font-medium text-xl">28441</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-inbox text-cyan-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">520 </span>
-                    <span className="text-500">newly registered</span>
-                </div>
-            </div>
-            <div className="col-12 lg:col-6 xl:col-3">
-                <div className="card mb-0">
-                    <div className="flex justify-content-between mb-3">
-                        <div>
-                            <span className="block text-500 font-medium mb-3">Comments</span>
-                            <div className="text-900 font-medium text-xl">152 Unread</div>
-                        </div>
-                        <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
-                            <i className="pi pi-comment text-purple-500 text-xl" />
-                        </div>
-                    </div>
-                    <span className="text-green-500 font-medium">85 </span>
-                    <span className="text-500">responded</span>
-                </div>
-            </div>
+        // <div className="grid">
+        //     <div className="col-12 lg:col-6 xl:col-3">
+        //         <div className="card mb-0">
+        //             <div className="flex justify-content-between mb-3">
+        //                 <div>
+        //                     <span className="block text-500 font-medium mb-3">Orders</span>
+        //                     <div className="text-900 font-medium text-xl">152</div>
+        //                 </div>
+        //                 <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+        //                     <i className="pi pi-shopping-cart text-blue-500 text-xl" />
+        //                 </div>
+        //             </div>
+        //             <span className="text-green-500 font-medium">24 new </span>
+        //             <span className="text-500">since last visit</span>
+        //         </div>
+        //     </div>
+        //     <div className="col-12 lg:col-6 xl:col-3">
+        //         <div className="card mb-0">
+        //             <div className="flex justify-content-between mb-3">
+        //                 <div>
+        //                     <span className="block text-500 font-medium mb-3">Revenue</span>
+        //                     <div className="text-900 font-medium text-xl">$2.100</div>
+        //                 </div>
+        //                 <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+        //                     <i className="pi pi-map-marker text-orange-500 text-xl" />
+        //                 </div>
+        //             </div>
+        //             <span className="text-green-500 font-medium">%52+ </span>
+        //             <span className="text-500">since last week</span>
+        //         </div>
+        //     </div>
+        //     <div className="col-12 lg:col-6 xl:col-3">
+        //         <div className="card mb-0">
+        //             <div className="flex justify-content-between mb-3">
+        //                 <div>
+        //                     <span className="block text-500 font-medium mb-3">Customers</span>
+        //                     <div className="text-900 font-medium text-xl">28441</div>
+        //                 </div>
+        //                 <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+        //                     <i className="pi pi-inbox text-cyan-500 text-xl" />
+        //                 </div>
+        //             </div>
+        //             <span className="text-green-500 font-medium">520 </span>
+        //             <span className="text-500">newly registered</span>
+        //         </div>
+        //     </div>
+        //     <div className="col-12 lg:col-6 xl:col-3">
+        //         <div className="card mb-0">
+        //             <div className="flex justify-content-between mb-3">
+        //                 <div>
+        //                     <span className="block text-500 font-medium mb-3">Comments</span>
+        //                     <div className="text-900 font-medium text-xl">152 Unread</div>
+        //                 </div>
+        //                 <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+        //                     <i className="pi pi-comment text-purple-500 text-xl" />
+        //                 </div>
+        //             </div>
+        //             <span className="text-green-500 font-medium">85 </span>
+        //             <span className="text-500">responded</span>
+        //         </div>
+        //     </div>
 
-            <div className="col-12 xl:col-6">
-                <div className="card">
-                    <h5>Recent Sales</h5>
-                    <DataTable value={products} rows={5} paginator responsiveLayout="scroll">
-                        <Column header="Image" body={(data) => <img className="shadow-2" src={`/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
-                        <Column field="name" header="Name" sortable style={{ width: '35%' }} />
-                        <Column field="price" header="Price" sortable style={{ width: '35%' }} body={(data) => formatCurrency(data.price)} />
-                        <Column
-                            header="View"
-                            style={{ width: '15%' }}
-                            body={() => (
-                                <>
-                                    <Button icon="pi pi-search" text />
-                                </>
-                            )}
-                        />
-                    </DataTable>
+        //     <div className="col-12 xl:col-6">
+        //         <div className="card">
+        //             <h5>Recent Sales</h5>
+        //             <DataTable value={products} rows={5} paginator responsiveLayout="scroll">
+        //                 <Column header="Image" body={(data) => <img className="shadow-2" src={`/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
+        //                 <Column field="name" header="Name" sortable style={{ width: '35%' }} />
+        //                 <Column field="price" header="Price" sortable style={{ width: '35%' }} body={(data) => formatCurrency(data.price)} />
+        //                 <Column
+        //                     header="View"
+        //                     style={{ width: '15%' }}
+        //                     body={() => (
+        //                         <>
+        //                             <Button icon="pi pi-search" text />
+        //                         </>
+        //                     )}
+        //                 />
+        //             </DataTable>
+        //         </div>
+        //     </div>
+        // </div>
+        <>
+            <div className="overflow-hidden">
+                <div
+                    className="bg-cover bg-no-repeat bg-center bg-primary border-round h-25rem w-full"
+                    style={{
+                        backgroundImage:
+                            "url('https://img.freepik.com/free-photo/3d-car-with-vibrant-colors_23-2150796954.jpg?t=st=1748269885~exp=1748273485~hmac=ee769a71f4931eae65ce681061a195d255ea82ffa2319350fd47833ff25404c6&w=826')"
+                    }}
+                ></div>
+            </div>
+            {/* <div className="flex justify-content-center align-items-center flex-wrap">
+                <h1 className="text-3xl text-primary">
+                    Cars is a specialized vehicle-management platform that lets users efficiently oversee an entire car
+                    inventory. Through an intuitive and secure interface, administrators can perform full CRUD
+                    operations Create, Read, Update, and Delete on every vehicle record.
+                </h1>
+            </div>
+             */}
+            <div className="flex justify-content-center align-items-center flex-wrap text-center px-4">
+                <div className="max-w-30rem">
+                    <h1 className="text-3xl text-red-500 mb-3">Cars – Vehicle Management Platform</h1>
+                    <p className="text-lg line-height-3">
+                        Cars is a specialized vehicle-management platform that lets users efficiently oversee an entire
+                        car inventory. Through an intuitive and secure interface, administrators can perform full CRUD
+                        operations—Create, Read, Update, and Delete—on every vehicle record.
+                    </p>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
