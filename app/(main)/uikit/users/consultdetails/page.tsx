@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Rating } from 'primereact/rating';
 import { Button } from 'primereact/button';
 import axios from 'axios';
-import {  } from 'react';
+import {} from 'react';
 import { TokenContext } from '@/app/(main)/context/TokenContext';
 import useAuthRedirect from '@/app/(main)/hooks/useAuthRedirect';
 // import { TokenContext } from '@/context/TokenContext';
@@ -20,9 +20,9 @@ interface User {
 const ConsultDetails = () => {
     useAuthRedirect(); /* redirect to login  */
     const [data, setData] = useState<User[] | null>(null);
+    const [msg, setMsg] = useState('');
 
     const { keyAccess, setKeyAccess } = useContext(TokenContext); /* we bring the context */
-    
 
     const DataviewGridItem = ({ user }: { user: User }) => {
         return (
@@ -58,9 +58,13 @@ const ConsultDetails = () => {
             });
 
             console.log(response.data);
-            setData(response.data)
+            setData(response.data);
+
+            if (response.data === 'you do not have permissions to access users') {
+                setMsg(response.data);
+            }
         } catch (error) {
-            console.log("Error binging datas")
+            console.log('Error binging datas');
         }
     };
 
@@ -79,10 +83,23 @@ const ConsultDetails = () => {
             </div>
 
             {/* <Header /> */}
-            <div className="card">
-                <h5>DataView</h5>
-                <div className="grid">{data ? data.map((user) => <DataviewGridItem key={user.id} user={user} />) : <p>Cargando usuarios...</p>}</div>
-            </div>
+            {!msg && (
+                <div className="card">
+                    <h5>DataView</h5>
+                    <div className="grid">
+                        {data ? (
+                            data.map((user) => <DataviewGridItem key={user.id} user={user} />)
+                        ) : (
+                            <p>Cargando usuarios...</p>
+                        )}
+                    </div>
+                </div>
+            )}
+            {msg && (
+                <div className="card">
+                    <h1>{msg}</h1>
+                </div>
+            )}
         </>
     );
 };

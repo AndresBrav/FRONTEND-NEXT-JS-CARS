@@ -48,23 +48,23 @@ const LoginPage = () => {
             console.log(response.data.result.token);
             // router.push('/');
         } catch (error) {
-            console.log("Error bringing datas")
+            console.log('Error bringing datas');
         }
     };
 
     useEffect(() => {
-        if (keyAccess) { //  Use token from context
-            router.push('/');
+        if (keyAccess) {
+            //  Use token from context
+            // router.push('/');
+            router.push('/uikit/cars/getcars');
         }
-    },[keyAccess])
+    }, [keyAccess]);
 
     return (
         <div className={containerClassName}>
             <div className="flex flex-column align-items-center justify-content-center">
                 <img
-                    src={`/layout/images/car-${
-                        layoutConfig.colorScheme === 'light' ? 'dark' : 'white'
-                    }.svg`}
+                    src={`/layout/images/car-${layoutConfig.colorScheme === 'light' ? 'dark' : 'white'}.svg`}
                     alt="Sakai logo"
                     className="mb-5 w-3rem  flex-shrink-0"
                 />
@@ -72,30 +72,19 @@ const LoginPage = () => {
                     style={{
                         borderRadius: '56px',
                         padding: '0.6rem',
-                        background:
-                            'linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)'
+                        background: 'linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)'
                     }}
                 >
                     {/* <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}> */}
                     {/* <div className="surface-card py-8 px-5 sm:px-8 w-20rem  sm:w-30rem" style={{ borderRadius: '53px' }}> */}
-                    <div
-                        className="surface-card p-4 sm:p-6 w-20rem sm:w-25rem"
-                        style={{ borderRadius: '30px' }}
-                    >
+                    <div className="surface-card p-4 sm:p-6 w-20rem sm:w-25rem" style={{ borderRadius: '30px' }}>
                         <div className="text-center mb-5">
-                            <div className="text-900 text-3xl font-medium mb-3">
-                                Welcome
-                            </div>
-                            <span className="text-600 font-medium">
-                                Sign in to continue
-                            </span>
+                            <div className="text-900 text-3xl font-medium mb-3">Welcome</div>
+                            <span className="text-600 font-medium">Sign in to continue</span>
                         </div>
 
                         <div>
-                            <label
-                                htmlFor="email1"
-                                className="block text-900 text-xl font-medium mb-2"
-                            >
+                            <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
                                 login
                             </label>
                             {/* <InputText id="email1" type="text" placeholder="login address" className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} /> */}
@@ -109,10 +98,7 @@ const LoginPage = () => {
                                 onChange={handleLogin}
                             />
 
-                            <label
-                                htmlFor="password1"
-                                className="block text-900 font-medium text-xl mb-2"
-                            >
+                            <label htmlFor="password1" className="block text-900 font-medium text-xl mb-2">
                                 clave
                             </label>
                             <Password
@@ -130,21 +116,13 @@ const LoginPage = () => {
                                     <Checkbox
                                         inputId="rememberme1"
                                         checked={checked}
-                                        onChange={(e) =>
-                                            setChecked(e.checked ?? false)
-                                        }
+                                        onChange={(e) => setChecked(e.checked ?? false)}
                                         className="mr-2"
                                     ></Checkbox>
-                                    <label htmlFor="rememberme1">
-                                        Remember me
-                                    </label>
+                                    <label htmlFor="rememberme1">Remember me</label>
                                 </div>
                             </div>
-                            <Button
-                                label="Sign In"
-                                className="w-full p-3 text-xl"
-                                onClick={handleStart}
-                            ></Button>
+                            <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleStart}></Button>
                         </div>
                     </div>
                 </div>

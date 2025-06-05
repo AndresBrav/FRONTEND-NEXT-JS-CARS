@@ -38,12 +38,12 @@ const ConsultOneDetail = () => {
                 }
             });
 
-            // console.log(response.data);
+            // console.log(response);
             // setData(response.data);
 
             if (response.data.msg) {
                 setMsg(response.data.msg);
-                console.log(response.data);
+                // console.log(response.data);
                 setData(null);
             } else {
                 console.log(response.data);

@@ -114,7 +114,7 @@ const AddUser = () => {
             {msg && (
                 <div className="col-12 md:col-6" style={{ borderRadius: '53px' }}>
                     <div className="card">
-                        <span className="text-blue-500 font-bold text-3xl">200</span>
+                        <span className="text-blue-500 font-bold text-3xl">403</span>
                         <h1 className="text-900 font-bold text-5xl mb-2">{msg}</h1>
                         {/* <div className="text-600 mb-5">hola</div> */}
                     </div>
