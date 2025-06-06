@@ -35,6 +35,8 @@ const CarsCrud = () => {
     const [product, setProduct] = useState<Product>({ id: '', nombre: '', descripcion: '', precio: 0, stock: 0 });
     const [submitted, setSubmitted] = useState(false);
 
+    const [counterCars, setCounterCars] = useState(0);
+
     const [id, setId] = useState<string | undefined>('second');
     const [nombre, setNombre] = useState<string | undefined>('');
     const [descripcion, setDescripcion] = useState<string | undefined>('');
@@ -63,7 +65,7 @@ const CarsCrud = () => {
         };
 
         fetchData();
-    }, [keyAccess]);
+    }, [keyAccess, counterCars]);
 
     const openNew = () => {
         setProduct({ id: '', nombre: '', descripcion: '', precio: 0, stock: 0 });
@@ -92,6 +94,7 @@ const CarsCrud = () => {
                         }
                     }
                 );
+                setCounterCars((prev) => prev + 1);
                 console.log(response);
                 setProductDialog(false); /* this close the window */
 
@@ -122,6 +125,7 @@ const CarsCrud = () => {
                     }
                 );
                 console.log(response);
+                setCounterCars((prev) => prev + 1);
 
                 setSubmitted(true);
                 setProductDialog(false); /* this close the window */
@@ -203,14 +207,15 @@ const CarsCrud = () => {
                     'x-api-token': keyAccess
                 }
             });
+            setCounterCars((prev) => prev + 1);
             console.log(response);
-            setDeleteProductDialog(false)
+            setDeleteProductDialog(false);
             toast.current?.show({
-                    severity: 'error',
-                    summary: 'Successful',
-                    detail: 'Car Deleted',
-                    life: 3000
-                });
+                severity: 'error',
+                summary: 'Successful',
+                detail: 'Car Deleted',
+                life: 3000
+            });
         } catch (error) {
             console.log('Error deleting car');
         }
@@ -237,6 +242,7 @@ const CarsCrud = () => {
                 <Column field="descripcion" header="Description" />
                 <Column field="stock" header="Stock" />
                 <Column header="Acctions" body={actionBodyTemplate} />
+                {/* <Column header="some" body={actionBodyTemplate} /> */}
             </DataTable>
             <Dialog
                 visible={productDialog}
