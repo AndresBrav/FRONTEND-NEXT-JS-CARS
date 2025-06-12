@@ -24,7 +24,7 @@ const AppMenu = () => {
                 { label: 'Update User', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/updateuser' },
                 { label: 'Delete User', icon: 'pi pi-fw pi-id-card', to: '/uikit/users/deleteuser' },
                 { label: 'Details Cars ', icon: 'pi pi-car', to: '/uikit/cars/getcars' },
-                { label: 'List Files ', icon: 'pi pi-file', to: '/uikit/cars/files/listfiles' }
+                { label: 'List Files ', icon: 'pi pi-file', to: '/uikit/cars/files/listfiles' },
                 // { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
                 // { label: 'Input', icon: 'pi pi-fw pi-check-square', to: '/uikit/input' },
                 // { label: 'Float Label', icon: 'pi pi-fw pi-bookmark', to: '/uikit/floatlabel' },
@@ -39,7 +39,7 @@ const AppMenu = () => {
                 // { label: 'Menu', icon: 'pi pi-fw pi-bars', to: '/uikit/menu', preventExact: true },
                 // { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/uikit/message' },
                 // { label: 'File', icon: 'pi pi-fw pi-file', to: '/uikit/file' },
-                // { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' },
+                { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/charts' }
                 // { label: 'Misc', icon: 'pi pi-fw pi-circle', to: '/uikit/misc' }
             ]
         },
