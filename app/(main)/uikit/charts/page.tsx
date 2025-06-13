@@ -41,15 +41,9 @@ const ChartDemo = () => {
     }, [array]);
 
     const fillArray = (array: statesdb[]) => {
-        console.log('the array is .....');
-        console.log(array);
-        console.log('the size is', array.length);
-
         let init: number = 5;
 
         for (const i of array) {
-            console.log(i.state);
-
             let states: number[] = [];
             if (i.state === 1) {
                 states = [init];
@@ -69,7 +63,9 @@ const ChartDemo = () => {
                 fill: false,
                 backgroundColor: '#00bcd4',
                 borderColor: '#00bcd4',
-                tension: 0.4
+                tension: 0.4,
+                pointRadius: 6, // size of circles
+                pointHoverRadius: 8 // size of hover
             };
             setDatasetsManual((prev) => [...prev, newDataset]);
             init = init + 5;
@@ -91,7 +87,6 @@ const ChartDemo = () => {
 
         fetchData();
     }, [keyAccess]);
-
 
     const generarGrafico = () => {
         const documentStyle = getComputedStyle(document.documentElement);
