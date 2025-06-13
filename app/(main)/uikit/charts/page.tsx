@@ -37,28 +37,44 @@ const ChartDemo = () => {
     const [datasetsManual, setDatasetsManual] = useState<DatasetType[]>([]);
 
     useEffect(() => {
-        // console.log('the array is .....');
-        // console.log(datasetsManual);
         fillArray(array);
     }, [array]);
 
     const fillArray = (array: statesdb[]) => {
         console.log('the array is .....');
         console.log(array);
+        console.log('the size is', array.length);
+
+        let init: number = 5;
+
+        for (const i of array) {
+            console.log(i.state);
+
+            let states: number[] = [];
+            if (i.state === 1) {
+                states = [init];
+            } else {
+                if (i.state === 2) {
+                    states = [init, init];
+                } else {
+                    if (i.state === 3) {
+                        states = [init, init, init];
+                    }
+                }
+            }
+
+            const newDataset = {
+                label: `${i.file_name}`,
+                data: states,
+                fill: false,
+                backgroundColor: '#00bcd4',
+                borderColor: '#00bcd4',
+                tension: 0.4
+            };
+            setDatasetsManual((prev) => [...prev, newDataset]);
+            init = init + 5;
+        }
     };
-
-    // useEffect(() => {
-    //     const newDataset = {
-    //         label: 'Car',
-    //         data: [25, 50],
-    //         fill: false,
-    //         backgroundColor: '#00bcd4',
-    //         borderColor: '#00bcd4',
-    //         tension: 0.4
-    //     };
-
-    //     setDatasetsManual((prev) => [...prev, newDataset]);
-    // }, []);
 
     useEffect(() => {
         if (!keyAccess || keyAccess.trim() === '') return;
