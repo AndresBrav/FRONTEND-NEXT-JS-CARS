@@ -92,40 +92,6 @@ const ChartDemo = () => {
         fetchData();
     }, [keyAccess]);
 
-    // const datasetsManual = [
-    //     {
-    //         label: 'First Carro1.pdf',
-    //         data: [80],
-    //         fill: false,
-    //         backgroundColor: '#6366f1',
-    //         borderColor: '#6366f1',
-    //         tension: 0.4
-    //     },
-    //     {
-    //         label: 'Second Dataset',
-    //         data: [28, 48, 40],
-    //         fill: false,
-    //         backgroundColor: '#bcbdf9',
-    //         borderColor: '#bcbdf9',
-    //         tension: 0.4
-    //     },
-    //     {
-    //         label: 'Carro2.txt',
-    //         data: [10, 10],
-    //         fill: false,
-    //         backgroundColor: '#bcbdf9',
-    //         borderColor: '#bcbdf9',
-    //         tension: 0.4
-    //     },
-    //     {
-    //         label: 'Carro2.txt',
-    //         data: [70, 70],
-    //         fill: false,
-    //         backgroundColor: '#bcbdf9',
-    //         borderColor: '#bcbdf9',
-    //         tension: 0.4
-    //     }
-    // ];
 
     const generarGrafico = () => {
         const documentStyle = getComputedStyle(document.documentElement);
