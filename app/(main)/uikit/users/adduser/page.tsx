@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useContext, FormEvent } from 'react';
+import React, { useState, useContext, FormEvent, useMemo } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import axios, { AxiosResponse } from 'axios';
@@ -17,36 +17,35 @@ const AddUser = () => {
     const [msg, setMsg] = useState<string>('');
     const { keyAccess, setKeyAccess } = useContext(TokenContext); /* we bring the context */
 
+    const payload = useMemo(() => {
+        return {
+            login,
+            clave,
+            sts,
+            tipo
+        };
+    }, [login, clave, sts, tipo]);
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Evita el refresco del formulario
         console.log(login);
         console.log(clave);
         try {
-            const response: AxiosResponse = await axios.post(
-                `${apiUsers}addUser/`,
-                {
-                    login,
-                    clave,
-                    sts,
-                    tipo
-                },
-                {
-                    headers: {
-                        'x-api-token': keyAccess,
-                        'Content-Type': 'application/json'
-                    }
+            const response: AxiosResponse = await axios.post(`${apiUsers}addUser/`, payload, {
+                headers: {
+                    'x-api-token': keyAccess,
+                    'Content-Type': 'application/json'
                 }
-            );
+            });
             console.log(response);
-            
-            if(response.data.msg){
-                setLogin("")
-                setClave("")
-                setSts("")
-                setTipo("")
+
+            if (response.data.msg) {
+                setLogin('');
+                setClave('');
+                setSts('');
+                setTipo('');
                 setMsg(response.data.msg as string);
             }
-
 
             // console.log('User added successfully:', response.data);
         } catch (error) {
