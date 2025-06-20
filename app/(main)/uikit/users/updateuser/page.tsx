@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useCallback } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import axios, { AxiosResponse } from 'axios';
@@ -173,8 +173,6 @@ const UpdateUser = () => {
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </>
     );

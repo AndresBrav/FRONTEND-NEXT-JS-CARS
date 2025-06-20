@@ -125,7 +125,8 @@ const CarsCrud = () => {
                     }
                 );
                 console.log(response);
-                setCounterCars((prev) => prev + 1);
+                // setCounterCars((i) => i + 1);
+                setCounterCars(counterCars + 1);
 
                 setSubmitted(true);
                 setProductDialog(false); /* this close the window */
